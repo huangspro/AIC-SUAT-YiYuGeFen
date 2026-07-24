@@ -1,0 +1,5 @@
+SegFormer/model_data/segformer_b1_backbone_weights.pth filter=lfs diff=lfs merge=lfs -text
+SegFormer/model_data/segformer_b1_weights_voc.pth filter=lfs diff=lfs merge=lfs -text
+SegFormer/model_data/segformer_b5_backbone_weights.pth filter=lfs diff=lfs merge=lfs -text
+SegFormer/model_data/segformer_b5_weights_voc.pth filter=lfs diff=lfs merge=lfs -text
+

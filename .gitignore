@@ -1,0 +1,17 @@
+SegFormer/VOCdevkit/
+SegFormer/logs/
+SegFormer/img/
+SegFormer/img_out/
+SegFormer/miou_out/
+SegFormer/datasets/
+SegFormer/logs/
+SegFormer/output.zip
+
+EoMT/wandb/
+EoMT/myDataset/
+EoMT/models/
+EoMT/eomt/
+EoMT/img/
+EoMT/imt_out/
+
+**/__pycache__/

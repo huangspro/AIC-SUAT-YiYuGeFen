@@ -13,6 +13,6 @@ EoMT/models/
 EoMT/eomt/
 EoMT/img/
 EoMT/img_out/
-gEoMT/output.zip
+EoMT/output.zip
 
 **/__pycache__/

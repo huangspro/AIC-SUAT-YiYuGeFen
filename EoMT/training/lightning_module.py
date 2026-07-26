@@ -193,11 +193,8 @@ class LightningModule(lightning.LightningModule):
 
         return self.criterion.loss_total(losses_all_blocks, self.log)
 
-    from pathlib import Path
-    import torchvision
-
-    # added by HaoyuHuang, 2026-7-24, created by ChatGPT
-    def test_step(self, batch, batch_idx):
+    def validation_step(self, batch, batch_idx=0):
+        '''
         imgs, targets = batch
 
         mask_logits_per_block, class_logits_per_block = self(imgs)
@@ -211,7 +208,7 @@ class LightningModule(lightning.LightningModule):
             class_logits,
         )
 
-        save_dir = Path("pred_masks")
+        save_dir = Path("img_out")
         save_dir.mkdir(exist_ok=True)
 
         for i in range(imgs.size(0)):
@@ -220,9 +217,7 @@ class LightningModule(lightning.LightningModule):
             Image.fromarray(pred.numpy()).save(
                 save_dir / f"{batch_idx:05d}_{i}.png"
             )
-
-
-    def validation_step(self, batch, batch_idx=0):
+        '''
         return self.eval_step(batch, batch_idx, "val")
 
     def mask_annealing(self, start_iter, current_iter, final_iter):

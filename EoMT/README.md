@@ -5,7 +5,7 @@ This is a project inherited from [EoMT](https://github.com/...). I (Haoyu Huang)
 Thanks for the generous authors of EoMT for using MIT license, allowing us to use this exceptional model as our fundamental model.
 
 ## Project Structure
-
+```markdown
 ├── configs                                             -------This directory defines all the configuraton for EoMT, in which we use CityScapes-1024*1024 version of EoMT.
 │   ├── dinov2
 │   │   ├── cityscapes
@@ -35,7 +35,7 @@ Thanks for the generous authors of EoMT for using MIT license, allowing us to us
 │   ├── mask_classification_panoptic.py
 │   ├── mask_classification_semantic.py
 │   └── two_stage_warmup_poly_schedule.py
-
+```
 
 ## [1] Changes in `cityscapes_semantic.py`
 
@@ -66,4 +66,4 @@ def target_parser(target, **kwargs):
 
 note:
 1. If you want to run training, use command "CUDA_VISIBLE_DEVICES=1 python3 main.py fit -c configs/dinov2/cityscapes/semantic/eomt_large_1024.yaml --trainer.devices 1 --data.batch_size 4 --data.path ./myDataset/data" .
-2. HaoyuHuang add a method named "test_step()" in the training/lightening_module.py , which will automatically implemented by lightening_module, and predict the images in img/. The output will be put in img_out/
+2. HaoyuHuang add a method named "predict_step()" in the training/lightening_module.py , which will automatically implemented by lightening_module, and predict the images in img/. The output will be put in img_out/

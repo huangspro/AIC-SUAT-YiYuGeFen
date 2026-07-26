@@ -32,8 +32,8 @@ The original project defines all the segformer net structure and train-test prec
 
 ## How to run the project ?
 
-1. When we want to start training, run the code `"torchrun --nproc_per_node=4 train.py"` And this will use 4 GPUs on the machine.
-2. If we want to predict, run the code `"python3 predict.py"` And the output will be put in img_out/
-3. If we want to calculate the miou, run the code `"python3 get_miou.py"`
+1. When we want to start training, run the code ```torchrun --nproc_per_node=4 train.py``` And this will use 4 GPUs on the machine.
+2. If we want to predict, run the code ```python3 predict.py``` And the output will be put in img_out/
+3. If we want to calculate the miou, run the code ```python3 get_miou.py```
 
 20+20+85 epoch have been run.

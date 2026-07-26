@@ -65,5 +65,8 @@ def target_parser(target, **kwargs):
 
 
 note:
-1. If you want to run training, use command "CUDA_VISIBLE_DEVICES=1 python3 main.py fit -c configs/dinov2/cityscapes/semantic/eomt_large_1024.yaml --trainer.devices 1 --data.batch_size 4 --data.path ./myDataset/data" .
+1. If you want to run training, use command 
+```markdown
+CUDA_VISIBLE_DEVICES=1 python3 main.py fit -c configs/dinov2/cityscapes/semantic/eomt_large_1024.yaml --trainer.devices 1 --data.batch_size 4 --data.path ./myDataset/data
+```
 2. HaoyuHuang add a method named "predict_step()" in the training/lightening_module.py , which will automatically implemented by lightening_module, and predict the images in img/. The output will be put in img_out/

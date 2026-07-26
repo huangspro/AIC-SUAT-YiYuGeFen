@@ -37,8 +37,8 @@ class CityscapesSemantic(LightningDataModule):
             check_empty_targets=check_empty_targets,  
         )  
         self.save_hyperparameters(ignore=["_class_path"])  
-        self.predict_img_dir
-        self.predict_save_dir
+        self.predict_img_dir = predict_img_dir
+        self.predict_save_dir = predict_save_dir
         self.transforms = Transforms(  
             img_size=img_size,  
             color_jitter_enabled=color_jitter_enabled,  

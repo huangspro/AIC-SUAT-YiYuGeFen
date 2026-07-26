@@ -69,4 +69,30 @@ note:
 ```markdown
 CUDA_VISIBLE_DEVICES=1 python3 main.py fit -c configs/dinov2/cityscapes/semantic/eomt_large_1024.yaml --trainer.devices 1 --data.batch_size 4 --data.path ./myDataset/data
 ```
-2. HaoyuHuang add a method named "predict_step()" in the training/lightening_module.py , which will automatically implemented by lightening_module, and predict the images in img/. The output will be put in img_out/
+
+2. If you want to predict the pictures in the img/ and output the mask to img_out/, run
+```markdown
+python3 main.py predict \
+    -c configs/dinov2/cityscapes/semantic/eomt_large_1024.yaml \
+    --model.network.masked_attn_enabled False \
+    --trainer.devices 1 \
+    --data.batch_size 4 \
+    --model.ckpt_path ./eomt/q36nuln3/checkpoints/epoch=49-step=81050.ckpt \
+    --data.predict_img_dir ./img \
+    --data.predict_save_dir ./img_out
+```
+
+3. If you want to validate and calculate the miou
+```markdown
+python3 main.py validate \
+    -c configs/dinov2/cityscapes/semantic/eomt_large_1024.yaml \
+    --model.network.masked_attn_enabled False \
+    --trainer.devices 1 \
+    --data.batch_size 4 \
+    --data.path ./myDataset/data \
+    --model.ckpt_path ./eomt/q36nuln3/checkpoints/epoch=49-step=81050.ckpt
+```
+
+4. HaoyuHuang added some changes in the datasets/cityscapes_semantic.py and create a file named predict_dataset.py to load predict dataset
+
+5. HaoyuHuang change the lightening_module.py and added a predict_step() method to implement predict process.

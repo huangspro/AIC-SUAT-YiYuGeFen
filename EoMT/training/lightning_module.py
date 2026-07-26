@@ -9,6 +9,7 @@
 # ---------------------------------------------------------------
 
 import math
+from pathlib import Path
 from typing import Optional, cast
 import lightning
 from lightning.fabric.utilities import rank_zero_info
@@ -169,8 +170,9 @@ class LightningModule(lightning.LightningModule):
         }
 
     def forward(self, imgs):
+        if isinstance(imgs, list):
+            imgs = torch.stack(imgs)
         x = imgs / 255.0
-
         return self.network(x)
 
     def training_step(self, batch, batch_idx):
@@ -194,30 +196,29 @@ class LightningModule(lightning.LightningModule):
         return self.criterion.loss_total(losses_all_blocks, self.log)
 
     def validation_step(self, batch, batch_idx=0):
-        '''
         imgs, targets = batch
 
-        mask_logits_per_block, class_logits_per_block = self(imgs)
-
-        # using the last block
-        mask_logits = mask_logits_per_block[-1]
-        class_logits = class_logits_per_block[-1]
-
-        logits = self.to_per_pixel_logits_semantic(
-            mask_logits,
-            class_logits,
-        )
-
-        save_dir = Path("img_out")
-        save_dir.mkdir(exist_ok=True)
-
-        for i in range(imgs.size(0)):
-            pred = logits[i].argmax(0).byte().cpu()
-
-            Image.fromarray(pred.numpy()).save(
-                save_dir / f"{batch_idx:05d}_{i}.png"
-            )
-        '''
+        # 处理 list 输入
+        if isinstance(imgs, list):
+            # 逐个 forward
+            all_mask_logits = []
+            all_class_logits = []
+            for img in imgs:
+                mask_logits_per_block, class_logits_per_block = self(img.unsqueeze(0))
+                all_mask_logits.append(mask_logits_per_block)
+                all_class_logits.append(class_logits_per_block)
+            # 这里需要根据你的 eval_step 逻辑调整...
+            # 或者更简单：逐个处理并保存结果
+            for i, img in enumerate(imgs):
+                mask_logits_per_block, class_logits_per_block = self(img.unsqueeze(0))
+                mask_logits = mask_logits_per_block[-1]
+                class_logits = class_logits_per_block[-1]
+                logits = self.to_per_pixel_logits_semantic(mask_logits, class_logits)
+                
+                save_dir = Path("img_out")
+                save_dir.mkdir(exist_ok=True)
+                pred = logits[0].argmax(0).byte().cpu()
+                Image.fromarray(pred.numpy()).save(save_dir / f"{batch_idx:05d}_{i}.png")
         return self.eval_step(batch, batch_idx, "val")
 
     def mask_annealing(self, start_iter, current_iter, final_iter):

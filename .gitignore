@@ -12,6 +12,7 @@ EoMT/myDataset/
 EoMT/models/
 EoMT/eomt/
 EoMT/img/
-EoMT/imt_out/
+EoMT/img_out/
+gEoMT/output.zip
 
 **/__pycache__/

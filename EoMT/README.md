@@ -40,11 +40,6 @@ Thanks to the authors of EoMT for releasing their work under the MIT License, wh
 │
 └── training/
     ├── lightning_module.py
-    ├── mask_classification_instance.py
-    ├── mask_classification_loss.py
-    ├── mask_classification_panoptic.py
-    ├── mask_classification_semantic.py
-    └── two_stage_warmup_poly_schedule.py
 ```
 
 ---

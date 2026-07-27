@@ -9,8 +9,7 @@
 
 ## Project Structure
 
-text
-.
+```text
 ├── nets/
 │   └── The net structuct of the net is defined here.
 │
@@ -65,7 +64,7 @@ text
 │
 └── Others
     └── (summary.py json_to_dataset.py)
-
+```
 ## Adaptation
 
 1. I change the num_class and some other configurations to fit our task, inculding:

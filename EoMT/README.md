@@ -1,3 +1,4 @@
+
 # EoMT Semantic Segmentation Adaptation for AIC
 
 >This project is inherited from **EoMT**. I (Haoyu Huang) adapted it for the semantic segmentation task in AIC (AI Competition).
@@ -6,7 +7,7 @@
 ---
 
 # Project Structure
-```text
+```md
 .
 ├── configs/                                   # Configuration files for EoMT
 │   ├── dinov2/
@@ -78,6 +79,7 @@ def target_parser(target, **kwargs):
 
     return masks, labels, [False for _ in range(len(masks))]
 ```
+---
 
 # Run
 ## 1. Training
@@ -121,6 +123,7 @@ python3 main.py validate \
 ## LOGs
 I trained the network for 50 epochs and save the checkpoint in eomt/.
 
+---
 ## Future Work
 
 To enhance the performance of the model, I propose the following measures:

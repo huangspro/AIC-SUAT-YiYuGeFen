@@ -1,16 +1,15 @@
-# This Project is original from the github repository bubbliiiing/segformer-pytorch, and is adapted to the AI Competition project by Haoyu Huang int 2026-7-14.
+# SegFormer Project
 
+> This is a project implementing SegFormer.
+> This Project is original from the github repository bubbliiiing/segformer-pytorch, adapted to the AI Competition project by HaoyuHuang at 2026-7-14.
+>
 > We express our sincere gratitude toward the author here. He generously used the MIT protocol so that we can take part in the competition based on his code.
-
-## The original project defines all the segformer net structure and train-test precess, and what I did is add the pretrained weigths and change some of code to fit our competition requirements.
-
-The code now can train and test normally.
 
 ---
 
-## The work process of the project is that(After I rewrite some code):
+## Project Structure
 
-```text
+text
 .
 ├── nets/
 │   └── The net structuct of the net is defined here.
@@ -33,7 +32,7 @@ The code now can train and test normally.
 │   └── Label.txt
 │       └── All the class is defined here.
 │
-│   > **note:** The images in the validation set are also in the train set, beacuse the size of train is so small, and I have to use the validation to train the net.
+│   > note: The images in the validation set are also in the train set, beacuse the size of train is so small, and I have to use the validation to train the net.
 │
 ├── model_data/
 │   ├── The weights of the model is stored here.
@@ -44,7 +43,7 @@ The code now can train and test normally.
 │   └── segformer_b1_backbone_weights.pth
 │       └── The weights of the backbone.
 │
-│   > **note:** When training, the train.py will load the weights in the model_data/ and start training based on the weights, However, the new model which is generated during training will be stored in logs/. Everytime before we start training, we should move the weights in the logs/ to model_data/, rename it as "segformer_b1_weights_voc.pth" and then start training.
+│   > note: When training, the train.py will load the weights in the model_data/ and start training based on the weights, However, the new model which is generated during training will be stored in logs/. Everytime before we start training, we should move the weights in the logs/ to model_data/, rename it as "segformer_b1_weights_voc.pth" and then start training.
 │
 ├── logs/
 │   └── Every training epoch, the train.py will save the LOSS information and the model file here, and flag the best model.
@@ -66,36 +65,55 @@ The code now can train and test normally.
 │
 └── Others
     └── (summary.py json_to_dataset.py)
-```
 
----
+## Adaptation
 
-## How to run the project ?
+1. I change the num_class and some other configurations to fit our task, inculding:
+   - `num_class` is changed to 9 (indexed from 0 to 8)
 
-1. When we want to start training, run the code
+I download the b1 and b2 pretrained model weights and train them on the dataset provided by the AI Competition.
 
-   ```bash
-   torchrun --nproc_per_node=4 train.py
-   ```
+## Install
 
-   And this will use 4 GPUs on the machine.
+bash
+pip3 install -r requirememts.txt
 
-2. If we want to predict, run the code
+## Run
 
-   ```bash
-   python3 predict.py
-   ```
+### 1. Training
 
-   And the output will be put in img_out/
+bash
+torchrun --nproc_per_node=4 train.py
 
-3. If we want to calculate the miou, run the code
+> **Note:** When training, the script will load the `pretrained backbone weights (named with keyword "backbone")` and the `whole model weights (named with keyword "voc")`.
+> To train model, you should make sure that the 2 files above are put in model_Data/.
+> During training, the best model weights will be put in logs/.
+> Next time for continuing training, you should move the weights in logs/ to model_data/ by hand.
+> IMPORTANT! Though I split the dataset into trainset and validationset. I used the pictures in the validationset to train. So if you want to validate the train, you should summit the predict output to the competition website and get the mIou score.
 
-   ```bash
-   python3 get_miou.py
-   ```
+### 2. Predict
 
----
+bash
+python3 predict.py
 
-20+20+85 epochs have been run yo train b1.
+And the output will be put in `img_out/`
 
-60 epochs have been run to trsin b5.
+### 3. Calculate the mIoU on validation
+
+bash
+python3 get_miou.py
+
+The mIou information will be output in `moiu/`
+
+## LOGs
+
+1. 20+20+85 epochs have been run yo train b1.
+2. 60 epochs have been run to trsin b5.
+
+## Future Work
+
+To enhance the performance of the model, I propose the following measures:
+
+1. Data enforcement.
+2. test-time-adaptation / test-time-training
+3. Implement multiple stages prediting.
